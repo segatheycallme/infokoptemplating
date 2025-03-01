@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>{% block title %}Base{% endblock %}</title>
+    <link rel="stylesheet" href="{{crate::TAILWINDCSS_PATH}}" />
+  </head>
+
+  <body>
+    <div id="content">
+      {% block content %}
+      <p>Alt text for block</p>
+      {% endblock %}
+    </div>
+  </body>
+</html>

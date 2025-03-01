@@ -1,0 +1,14 @@
+[package]
+name = "infokoptemplating"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio = { version = "1.43.0", features = ["full"] }
+axum = "0.8.1"
+askama = "0.12.1"
+askama_web = { version = "0.0.1-pre.0", features = ["axum-0.8"] }
+tower-http = { version = "0.6.2", features = ["cors", "fs"] }
+reqwest = "0.12.12"
+scraper = "0.23.1"
+regex = "1.11.1"

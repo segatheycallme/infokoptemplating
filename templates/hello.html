@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<div class="p-16 flex flex-wrap bg-gray-100 justify-between min-h-screen">
+  {% for item in items %}
+  <div class="bg-white shadow-lg p-8 m-7 size-max">
+    <h1>
+{{item}}
+    </h1>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
