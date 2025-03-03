@@ -14,7 +14,7 @@ pub struct Weather {
     temperature_feel: f32,
     wind_average: f32,
     wind_max: f32,
-    wind_direction: String,
+    wind_direction: u16,
     pressure: f32,
     percipitation: f32,
     uv: f32,
@@ -78,7 +78,8 @@ impl Weather {
             .parse()
             .ok()?;
         let wind_direction_regex = Regex::new(r"([A-Z]+)").unwrap();
-        let wind_direction = wind_direction_regex.find(wind)?.as_str().to_string();
+        let wind_direction_str = wind_direction_regex.find(wind)?.as_str().to_string();
+        let wind_direction = wind_direction_to_degree(&wind_direction_str, None)?;
 
         iter = tbody_cells.next()?.text();
         let pressure = iter
@@ -129,4 +130,23 @@ impl Weather {
         })
     }
 }
-// GET http://localhost:3000
+
+fn wind_direction_to_degree(raw: &str, curr: Option<u16>) -> Option<u16> {
+    if raw.is_empty() {
+        return curr;
+    }
+    let letter_value = match raw.chars().last()? {
+        'N' => Some(0),
+        'E' => Some(90),
+        'S' => Some(180),
+        'W' => Some(270),
+        _ => None,
+    }?;
+    if let Some(current_value) = curr {
+        return wind_direction_to_degree(
+            raw.get(0..(raw.len() - 1))?,
+            Some((current_value + letter_value) / 2),
+        );
+    }
+    wind_direction_to_degree(raw.get(0..(raw.len() - 1))?, Some(letter_value))
+}

@@ -1,12 +1,16 @@
-use std::error::Error;
+mod piste;
+mod weather;
+
+use crate::piste::Piste;
+use crate::weather::Weather;
 
 use askama::Template;
 use askama_web::WebTemplate;
 use axum::{Router, extract::State, response::IntoResponse, routing::get, serve};
-use infokoptemplating::Weather;
 use reqwest::Client;
 use scraper::{Html, Selector};
-use tokio::io::AsyncReadExt;
+use std::error::Error;
+use tokio::{fs::File, io::AsyncReadExt};
 use tower_http::services::ServeFile;
 
 #[allow(dead_code)]
@@ -35,7 +39,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 // GET http://localhost:3000
 async fn hi(State(_client): State<Client>) -> impl IntoResponse {
     let mut body = String::new();
-    tokio::fs::File::open(std::path::Path::new("./infokop.html"))
+    File::open(std::path::Path::new("./infokop.html"))
         .await
         .unwrap()
         .read_to_string(&mut body)
@@ -50,7 +54,19 @@ async fn hi(State(_client): State<Client>) -> impl IntoResponse {
     //     .text()
     //     .await
     //     .unwrap();
+    // File::create(std::path::Path::new("./infosnip.html"))
+    //     .await
+    //     .unwrap()
+    //     .write_all(piste.unwrap().as_bytes())
+    //     .await
+    //     .unwrap();
+    // format!("{:#?}", weather)
 
+    let (_weather, piste) = html_helper(body);
+    format!("{:#?}", piste)
+}
+
+fn html_helper(body: String) -> (Option<Weather>, Option<Piste>) {
     let html = Html::parse_document(&body);
     let mut el_iter = html
         .select(&Selector::parse("table.contentpaneopen").unwrap())
@@ -60,7 +76,7 @@ async fn hi(State(_client): State<Client>) -> impl IntoResponse {
         .nth(3)
         .unwrap()
         .child_elements();
-    let weather = Weather::from_html_element(el_iter.nth(2).unwrap()).unwrap();
-    // let piste = el_iter.next().unwrap();
-    format!("{:#?}", weather)
+    let weather = Weather::from_html_element(el_iter.nth(2).unwrap());
+    let piste = Piste::from_html_element(el_iter.next().unwrap());
+    (weather, piste)
 }
