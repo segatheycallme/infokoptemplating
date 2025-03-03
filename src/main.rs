@@ -38,22 +38,22 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
 // GET http://localhost:3000
 async fn hi(State(_client): State<Client>) -> impl IntoResponse {
-    let mut body = String::new();
-    File::open(std::path::Path::new("./infokop.html"))
-        .await
-        .unwrap()
-        .read_to_string(&mut body)
-        .await
-        .unwrap();
-    // let body = _client
-    //     .get("https://www.infokop.net/info/ski-info.html")
-    //     .header("User-Agent", "insanely dumb bypass")
-    //     .send()
+    // let mut body = String::new();
+    // File::open(std::path::Path::new("./infokop.html"))
     //     .await
     //     .unwrap()
-    //     .text()
+    //     .read_to_string(&mut body)
     //     .await
     //     .unwrap();
+    let body = _client
+        .get("https://www.infokop.net/info/ski-info.html")
+        .header("User-Agent", "insanely dumb bypass")
+        .send()
+        .await
+        .unwrap()
+        .text()
+        .await
+        .unwrap();
     // File::create(std::path::Path::new("./infosnip.html"))
     //     .await
     //     .unwrap()
@@ -62,8 +62,8 @@ async fn hi(State(_client): State<Client>) -> impl IntoResponse {
     //     .unwrap();
     // format!("{:#?}", weather)
 
-    let (_weather, piste) = html_helper(body);
-    format!("{:#?}", piste)
+    let (_weather, _piste) = html_helper(body);
+    format!("{:#?}", _piste)
 }
 
 fn html_helper(body: String) -> (Option<Weather>, Option<Piste>) {

@@ -22,6 +22,7 @@ pub struct Weather {
     measured_at: u16,
 }
 
+// GET http://localhost:3000
 impl Weather {
     pub fn from_html_element(el: ElementRef) -> Option<Self> {
         let thead_selector = Selector::parse("thead > tr > td").unwrap();
@@ -30,7 +31,7 @@ impl Weather {
         let temperature = thead_cells
             .nth(6)?
             .text()
-            .nth(1)?
+            .next()?
             .trim()
             .replace(',', ".")
             .parse()
@@ -48,7 +49,7 @@ impl Weather {
 
         iter = tbody_cells.next()?.text();
         let temperature_pancic = iter
-            .nth(4)?
+            .nth(1)?
             .trim()
             .trim_end_matches('°')
             .replace(',', ".")
@@ -63,7 +64,7 @@ impl Weather {
             .ok()?;
 
         iter = tbody_cells.next()?.text();
-        let wind = iter.nth(3)?.trim();
+        let wind = iter.nth(2)?.trim();
         let wind_regex = Regex::new(r"(\d+,?\d?)").unwrap();
         let wind_average = wind_regex
             .find(wind)?
@@ -83,7 +84,7 @@ impl Weather {
 
         iter = tbody_cells.next()?.text();
         let pressure = iter
-            .nth(1)?
+            .next()?
             .trim()
             .trim_start_matches("pritisak ")
             .trim_end_matches(" hPa")
@@ -101,7 +102,7 @@ impl Weather {
         let uv: f32 = iter.next()?.trim().trim_start_matches("UV ").parse().ok()?;
 
         iter = tbody_cells.next()?.text();
-        let intermediary = iter.nth(1)?.split_whitespace().nth(1)?.split_once('-')?;
+        let intermediary = iter.next()?.split_whitespace().nth(1)?.split_once('-')?;
         let snow_piste = (intermediary.0.parse().ok()?, intermediary.1.parse().ok()?);
         let measured_at = iter
             .next()?

@@ -12,6 +12,7 @@ pub struct Piste {
 #[allow(dead_code)]
 #[derive(Debug)]
 struct Lift {
+    online: bool,
     slope_name: String,
     skiers_per_hour: u16,
     length: u16,
@@ -23,7 +24,6 @@ struct Lift {
     closing_time: String,
 }
 
-// GET http://localhost:3000
 impl Piste {
     pub fn from_html_element(el: ElementRef) -> Option<Self> {
         let mut day_lifts = vec![];
@@ -49,11 +49,19 @@ impl Piste {
     }
 }
 
+// GET http://localhost:3000
 impl Lift {
     fn from_html_element(el: ElementRef) -> Option<Self> {
+        dbg!(&el.html());
         let mut tds = el.child_elements();
 
-        let slope_name = tds.next()?.text().nth(3)?.trim().to_string();
+        let first_td = tds.next()?;
+        let online = first_td
+            .child_elements()
+            .next()?
+            .attr("class")?
+            .contains("clrGreen");
+        let slope_name = first_td.text().nth(2)?.trim().to_string();
         let skiers_per_hour = tds
             .nth(1)?
             .text()
@@ -93,6 +101,7 @@ impl Lift {
         let closing_time = times.next()?.trim().to_string();
 
         Some(Lift {
+            online,
             slope_name,
             skiers_per_hour,
             length,
