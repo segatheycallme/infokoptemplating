@@ -1,25 +1,27 @@
 use std::collections::HashMap;
 
 use scraper::{ElementRef, Selector};
+use serde::{Deserialize, Serialize};
 
 #[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Piste {
     pub day_lifts: Vec<Lift>,
     pub night_lifts: Vec<Lift>,
 }
 
 #[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Lift {
     pub online: bool,
-    pub slope_name: String,
+    pub number: String,
+    pub name: String,
     pub skiers_per_hour: u16,
     pub length: u16,
     pub height: u16,
-    pub duration: f32,
-    pub slopes: Option<HashMap<String, bool>>,
-    pub paths: Option<HashMap<String, bool>>,
+    duration: f32,
+    slopes: Option<HashMap<String, bool>>,
+    paths: Option<HashMap<String, bool>>,
     pub opening_time: String,
     pub closing_time: String,
 }
@@ -60,7 +62,9 @@ impl Lift {
             .next()?
             .attr("class")?
             .contains("clrGreen");
-        let slope_name = first_td.text().nth(2)?.trim().to_string();
+        let mut first_text = first_td.text();
+        let number: String = first_text.next()?.trim().to_string();
+        let name = first_text.nth(1)?.trim().to_string();
         let skiers_per_hour = tds
             .nth(1)?
             .text()
@@ -101,7 +105,8 @@ impl Lift {
 
         Some(Lift {
             online,
-            slope_name,
+            name,
+            number,
             skiers_per_hour,
             length,
             height,
@@ -111,5 +116,21 @@ impl Lift {
             opening_time,
             closing_time,
         })
+    }
+
+    pub fn get_slopes(&self) -> Vec<(&String, &bool)> {
+        if let Some(inner_slopes) = &self.slopes {
+            let mut slopes = inner_slopes.iter().collect::<Vec<(&String, &bool)>>();
+            slopes.sort();
+            slopes
+        } else {
+            vec![]
+        }
+    }
+
+    pub fn get_duration(&self) -> (u16, u16) {
+        let minutes = self.duration.trunc() as u16;
+        let seconds = (self.duration.fract() * 60.0) as u16;
+        (minutes, seconds)
     }
 }
