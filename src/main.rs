@@ -10,15 +10,12 @@ use axum::{Router, extract::State, response::IntoResponse, routing::get, serve};
 use reqwest::Client;
 use scraper::{Html, Selector};
 use std::error::Error;
-use tokio::{fs::File, io::AsyncReadExt};
 use tower_http::services::ServeFile;
 
-#[allow(dead_code)]
 const TAILWINDCSS_PATH: &str = "http://localhost:3000/style";
 
 #[derive(Template, WebTemplate)]
 #[template(path = "hello.html")]
-#[allow(dead_code)]
 struct Hai<'a> {
     items: Vec<&'a str>,
 }
@@ -38,13 +35,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
 // GET http://localhost:3000
 async fn hi(State(_client): State<Client>) -> impl IntoResponse {
-    // let mut body = String::new();
-    // File::open(std::path::Path::new("./infokop.html"))
-    //     .await
-    //     .unwrap()
-    //     .read_to_string(&mut body)
-    //     .await
-    //     .unwrap();
     let body = _client
         .get("https://www.infokop.net/info/ski-info.html")
         .header("User-Agent", "insanely dumb bypass")
@@ -54,16 +44,13 @@ async fn hi(State(_client): State<Client>) -> impl IntoResponse {
         .text()
         .await
         .unwrap();
-    // File::create(std::path::Path::new("./infosnip.html"))
-    //     .await
-    //     .unwrap()
-    //     .write_all(piste.unwrap().as_bytes())
-    //     .await
-    //     .unwrap();
-    // format!("{:#?}", weather)
 
-    let (_weather, _piste) = html_helper(body);
-    format!("{:#?}", _piste)
+    #[allow(unused_variables)]
+    let (weather, piste) = html_helper(body);
+
+    Hai {
+        items: vec!["caoo"],
+    }
 }
 
 fn html_helper(body: String) -> (Option<Weather>, Option<Piste>) {

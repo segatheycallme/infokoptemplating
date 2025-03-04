@@ -5,23 +5,23 @@ use scraper::{ElementRef, Selector};
 #[allow(dead_code)]
 #[derive(Debug)]
 pub struct Piste {
-    day_lifts: Vec<Lift>,
-    night_lifts: Vec<Lift>,
+    pub day_lifts: Vec<Lift>,
+    pub night_lifts: Vec<Lift>,
 }
 
 #[allow(dead_code)]
 #[derive(Debug)]
-struct Lift {
-    online: bool,
-    slope_name: String,
-    skiers_per_hour: u16,
-    length: u16,
-    height: u16,
-    duration: f32,
-    slopes: Option<HashMap<String, bool>>,
-    paths: Option<HashMap<String, bool>>,
-    opening_time: String,
-    closing_time: String,
+pub struct Lift {
+    pub online: bool,
+    pub slope_name: String,
+    pub skiers_per_hour: u16,
+    pub length: u16,
+    pub height: u16,
+    pub duration: f32,
+    pub slopes: Option<HashMap<String, bool>>,
+    pub paths: Option<HashMap<String, bool>>,
+    pub opening_time: String,
+    pub closing_time: String,
 }
 
 impl Piste {
@@ -52,7 +52,6 @@ impl Piste {
 // GET http://localhost:3000
 impl Lift {
     fn from_html_element(el: ElementRef) -> Option<Self> {
-        dbg!(&el.html());
         let mut tds = el.child_elements();
 
         let first_td = tds.next()?;

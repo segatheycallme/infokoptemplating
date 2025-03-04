@@ -4,22 +4,22 @@ use scraper::{ElementRef, Selector};
 #[derive(Debug)]
 #[allow(dead_code)]
 pub struct Weather {
-    temperature: f32,
-    humidity: u16,
-    snow: u16,
-    visual: String,
-    sunrise: String,
-    sunset: String,
-    temperature_pancic: f32,
-    temperature_feel: f32,
-    wind_average: f32,
-    wind_max: f32,
-    wind_direction: u16,
-    pressure: f32,
-    percipitation: f32,
-    uv: f32,
-    snow_piste: (u16, u16),
-    measured_at: u16,
+    pub temperature: f32,
+    pub humidity: u16,
+    pub snow: u16,
+    pub visual: String,
+    pub sunrise: String,
+    pub sunset: String,
+    pub temperature_pancic: f32,
+    pub temperature_feel: f32,
+    pub wind_average: f32,
+    pub wind_max: f32,
+    pub wind_direction: u16,
+    pub pressure: f32,
+    pub percipitation: f32,
+    pub uv: f32,
+    pub snow_piste: (u16, u16),
+    pub measured_at: u16,
 }
 
 // GET http://localhost:3000
@@ -49,7 +49,7 @@ impl Weather {
 
         iter = tbody_cells.next()?.text();
         let temperature_pancic = iter
-            .nth(1)?
+            .nth(3)?
             .trim()
             .trim_end_matches('°')
             .replace(',', ".")
