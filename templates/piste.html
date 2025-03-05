@@ -1,0 +1,46 @@
+<div class="overflow-auto m-2 border border-slate-800 w-max">
+  <table class="border-collapse">
+    <thead class="bg-slate-100">
+      <tr class="m-2">
+        <td class="px-2"></td>
+        <td class="px-2">name</td>
+        <td class="px-2 pr-10">slopes</td>
+        <td class="px-2">skiers/h</td>
+        <td class="px-2">length</td>
+        <td class="px-2">height</td>
+        <td class="px-2">duration</td>
+        <td class="px-2 text-nowrap">
+          <div class="flex justify-between items-center h-full">
+            <span> from </span>
+            -
+            <span> to </span>
+          </div>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="bg-slate-100 border-t border-slate-400">
+        <td></td>
+        <td class="font-bold">day lifts</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      {% for lift in day_lifts %} {% include "lift.html" %} {% endfor %}
+      <tr class="bg-slate-100 border-t border-slate-400">
+        <td></td>
+        <td class="font-bold">night lifts</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      {% for lift in night_lifts %} {% include "lift.html" %} {% endfor %}
+    </tbody>
+  </table>
+</div>

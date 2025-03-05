@@ -1,0 +1,25 @@
+<tr class="{% if lift.online %}bg-white{% else %}bg-red-100{% endif %}">
+  <td class="border-t border-slate-400 px-2">{{ lift.number }}</td>
+  <td class="border-t border-slate-400 px-2 text-nowrap">{{ lift.name }}</td>
+  <td class="border-t border-slate-400 px-2">
+    {% for slope in lift.get_slopes() %}
+    <span
+      class="{% if slope.1 %}text-green-950{% else %}text-red-800{% endif %}"
+      >{{slope.0}}</span
+    >
+    {% endfor %}
+  </td>
+  <td class="border-t border-slate-400 px-2">{{ lift.skiers_per_hour }}</td>
+  <td class="border-t border-slate-400 px-2">{{ lift.length }}m</td>
+  <td class="border-t border-slate-400 px-2">{{ lift.height }}m</td>
+  <td class="border-t border-slate-400 px-2 text-nowrap">
+    {{ lift.get_duration().0 }}min {{ lift.get_duration().1 }}s
+  </td>
+  <td class="border-t border-slate-400 px-2 text-nowrap">
+    <div class="flex justify-between items-center h-full">
+      <span> {{ lift.opening_time }} </span>
+      -
+      <span> {{ lift.closing_time }} </span>
+    </div>
+  </td>
+</tr>

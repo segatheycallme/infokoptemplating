@@ -1,0 +1,41 @@
+[
+  {
+    "closing_time": "16:30",
+    "duration": 6.099999904632568,
+    "height": 191,
+    "length": 963,
+    "name": "Sunčana dolina",
+    "number": "1",
+    "online": true,
+    "opening_time": "09:00",
+    "paths": {},
+    "skiers_per_hour": 2070,
+    "slopes": {}
+  },
+  {
+    "closing_time": "16:30",
+    "duration": 2.299999952316284,
+    "height": 76,
+    "length": 450,
+    "name": "Malo jezero",
+    "number": "2",
+    "online": true,
+    "opening_time": "09:00",
+    "paths": {},
+    "skiers_per_hour": 880,
+    "slopes": {}
+  },
+  {
+    "closing_time": "16:30",
+    "duration": 4.300000190734863,
+    "height": 116,
+    "length": 671,
+    "name": "Krst",
+    "number": "3",
+    "online": true,
+    "opening_time": "09:00",
+    "paths": {},
+    "skiers_per_hour": 2018,
+    "slopes": {}
+  }
+]

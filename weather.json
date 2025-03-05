@@ -1,0 +1,21 @@
+{
+  "temperature": -0.9,
+  "humidity": 30,
+  "snow": 31,
+  "visual": "Vedro",
+  "sunrise": "6:08",
+  "sunset": "17:27",
+  "temperature_pancic": -2.0,
+  "temperature_feel": -2.0,
+  "wind_average": 0.8,
+  "wind_max": 2.0,
+  "wind_direction": 90,
+  "pressure": 83.78,
+  "percipitation": 0.0,
+  "uv": 3.51,
+  "snow_piste": [
+    10,
+    60
+  ],
+  "measured_at": 19
+}
