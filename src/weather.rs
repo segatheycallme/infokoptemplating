@@ -3,12 +3,12 @@ use scraper::{ElementRef, Selector};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
-#[allow(dead_code)]
 pub struct Weather {
     pub temperature: f32,
     pub humidity: u16,
     pub snow: u16,
     pub visual: String,
+    pub visual_img: String,
     pub sunrise: String,
     pub sunset: String,
     pub temperature_pancic: f32,
@@ -17,7 +17,7 @@ pub struct Weather {
     pub wind_max: f32,
     pub wind_direction: u16,
     pub pressure: f32,
-    pub percipitation: f32,
+    pub precipitation: f32,
     pub uv: f32,
     pub snow_piste: (u16, u16),
     pub measured_at: u16,
@@ -26,11 +26,19 @@ pub struct Weather {
 // GET http://localhost:3000
 impl Weather {
     pub fn from_html_element(el: ElementRef) -> Option<Self> {
+        println!("{}", el.html());
         let thead_selector = Selector::parse("thead > tr > td").unwrap();
         let mut thead_cells = el.select(&thead_selector);
 
+        let visual_img = thead_cells
+            .nth(5)?
+            .child_elements()
+            .next()?
+            .attr("src")?
+            .trim()
+            .to_string();
         let temperature = thead_cells
-            .nth(6)?
+            .next()?
             .text()
             .next()?
             .trim()
@@ -117,6 +125,7 @@ impl Weather {
             humidity,
             temperature,
             visual,
+            visual_img,
             sunrise,
             sunset,
             temperature_pancic,
@@ -125,7 +134,7 @@ impl Weather {
             wind_max,
             wind_direction,
             pressure,
-            percipitation,
+            precipitation: percipitation,
             uv,
             snow_piste,
             measured_at,

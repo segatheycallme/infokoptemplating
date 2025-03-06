@@ -3,14 +3,12 @@ use std::collections::HashMap;
 use scraper::{ElementRef, Selector};
 use serde::{Deserialize, Serialize};
 
-#[allow(dead_code)]
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Piste {
     pub day_lifts: Vec<Lift>,
     pub night_lifts: Vec<Lift>,
 }
 
-#[allow(dead_code)]
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Lift {
     pub online: bool,

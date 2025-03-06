@@ -1,1 +1,53 @@
-<div class="overflow-auto m-2 border border-slate-800 w-max">ovde ima nes</div>
+<div class="overflow-auto m-2 border border-slate-800 bg-slate-50 w-max">
+  <div class="grid grid-cols-2 grid-rows-3 p-3">
+    <!-- visual, visual_img -->
+    <div class="flex flex-col items-center justify-end">
+      <img src="{{ weather.visual_img }}" alt="sunny" class="size-26 mb-1" />
+      <span class="">{{ weather.visual }}</span>
+    </div>
+    <!-- temp, temp pancic, temp feel -->
+    <div class="flex flex-col items-center justify-end">
+      <span class="text-5xl mb-2">{{ weather.temperature }}°C</span>
+      <span class="-mb-1">pancic: {{ weather.temperature_pancic }}°C</span>
+      <span class="">feels like: {{ weather.temperature_feel }}°C</span>
+    </div>
+    <!-- snow, snow piste -->
+    <div class="flex flex-col items-center justify-end">
+      <span class="text-5xl mb-3"
+        >{{ weather.snow }}<span class="text-3xl">cm</span>
+      </span>
+      <span class="mb-2"
+        >piste: {{ weather.snow_piste.0 }}-{{ weather.snow_piste.1 }}cm</span
+      >
+    </div>
+    <!-- uv, sunrise, sunset -->
+    <div class="flex flex-col items-center justify-end">
+      <span class="text-5xl mb-2"
+        >{{ weather.uv }}<span class="text-3xl">uv</span></span
+      >
+      <span class="-mb-1">sunrise: {{ weather.sunrise }}</span>
+      <span class="">sunset: {{ weather.sunset }}</span>
+    </div>
+    <!-- wind avg, wind max, wind direction -->
+    <div class="flex flex-col items-center justify-end">
+      <img
+        src="https://www.infokop.net/images/wind-dart-black-1.png"
+        alt="wind compass"
+        class="size-22"
+        style="rotate: {{ weather.wind_direction }}deg;"
+      />
+      <span class="-mb-1">avg: {{ weather.wind_average }}m/s</span>
+      <span class="">max: {{ weather.wind_max }}m/s</span>
+    </div>
+    <!-- precipitation, humidity, pressure -->
+    <div class="flex flex-col items-center justify-end">
+      <span class="text-5xl mb-3"
+        >{{ weather.precipitation }}<span class="text-3xl">mm</span></span
+      >
+      <span class="-mb-1">humidity: {{ weather.humidity }}%</span>
+      <span class="">pressure: {{ weather.pressure }}kPa</span>
+    </div>
+  </div>
+  <!-- measured_at -->
+  <p align="center">measured at {{ weather.measured_at }}h</p>
+</div>

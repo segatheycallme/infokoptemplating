@@ -29,7 +29,7 @@
         <td></td>
         <td></td>
       </tr>
-      {% for lift in day_lifts %} {% include "lift.html" %} {% endfor %}
+      {% for lift in piste.day_lifts %} {% include "lift.html" %} {% endfor %}
       <tr class="bg-slate-100 border-t border-slate-400">
         <td></td>
         <td class="font-bold">night lifts</td>
@@ -40,7 +40,7 @@
         <td></td>
         <td></td>
       </tr>
-      {% for lift in night_lifts %} {% include "lift.html" %} {% endfor %}
+      {% for lift in piste.night_lifts %} {% include "lift.html" %} {% endfor %}
     </tbody>
   </table>
 </div>
