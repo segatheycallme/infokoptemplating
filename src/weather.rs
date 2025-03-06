@@ -26,7 +26,6 @@ pub struct Weather {
 // GET http://localhost:3000
 impl Weather {
     pub fn from_html_element(el: ElementRef) -> Option<Self> {
-        println!("{}", el.html());
         let thead_selector = Selector::parse("thead > tr > td").unwrap();
         let mut thead_cells = el.select(&thead_selector);
 
