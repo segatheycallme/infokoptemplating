@@ -11,8 +11,8 @@ pub struct Weather {
     pub visual_img: String,
     pub sunrise: String,
     pub sunset: String,
-    pub temperature_pancic: f32,
-    pub temperature_feel: f32,
+    pub temperature_pancic: u16,
+    pub temperature_feel: u16,
     pub wind_average: f32,
     pub wind_max: f32,
     pub wind_direction: u16,
@@ -56,20 +56,8 @@ impl Weather {
         let sunset = iter.next()?.trim().trim_start_matches('↓').to_string();
 
         iter = tbody_cells.next()?.text();
-        let temperature_pancic = iter
-            .nth(3)?
-            .trim()
-            .trim_end_matches('°')
-            .replace(',', ".")
-            .parse()
-            .ok()?;
-        let temperature_feel = iter
-            .nth(1)?
-            .trim()
-            .trim_end_matches('°')
-            .replace(',', ".")
-            .parse()
-            .ok()?;
+        let temperature_pancic = iter.nth(3)?.trim().trim_end_matches('°').parse().ok()?;
+        let temperature_feel = iter.nth(1)?.trim().trim_end_matches('°').parse().ok()?;
 
         iter = tbody_cells.next()?.text();
         let wind = iter.nth(2)?.trim();
