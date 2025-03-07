@@ -7,7 +7,7 @@ use crate::weather::Weather;
 use askama::Template;
 use askama_web::WebTemplate;
 use axum::{Router, extract::State, response::IntoResponse, routing::get, serve};
-use reqwest::Client;
+use reqwest::{Client, ClientBuilder};
 use scraper::{Html, Selector};
 use std::error::Error;
 use tower_http::services::ServeFile;
@@ -27,7 +27,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let app = Router::new()
         .route_service("/style", ServeFile::new("templates/output.css"))
         .route("/", get(hi))
-        .with_state(Client::new());
+        .with_state(ClientBuilder::new().brotli(true).build()?);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
     serve(listener, app).await?;
