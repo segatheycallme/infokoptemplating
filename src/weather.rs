@@ -1,8 +1,7 @@
 use regex::Regex;
 use scraper::{ElementRef, Selector};
-use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug)]
 pub struct Weather {
     pub temperature: f32,
     pub humidity: u16,

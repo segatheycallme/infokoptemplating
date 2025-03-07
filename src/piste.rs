@@ -1,15 +1,14 @@
 use std::collections::HashMap;
 
 use scraper::{ElementRef, Selector};
-use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug)]
 pub struct Piste {
     pub day_lifts: Vec<Lift>,
     pub night_lifts: Vec<Lift>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug)]
 pub struct Lift {
     pub online: bool,
     pub number: String,
@@ -19,6 +18,7 @@ pub struct Lift {
     pub height: u16,
     duration: f32,
     slopes: Option<HashMap<String, bool>>,
+    #[allow(dead_code)]
     paths: Option<HashMap<String, bool>>,
     pub opening_time: String,
     pub closing_time: String,

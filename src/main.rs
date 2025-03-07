@@ -10,7 +10,7 @@ use axum::{Router, extract::State, response::IntoResponse, routing::get, serve};
 use reqwest::{Client, ClientBuilder};
 use scraper::{Html, Selector};
 use std::error::Error;
-use tower_http::services::ServeFile;
+use tower_http::{compression::CompressionLayer, services::ServeFile};
 
 const TAILWINDCSS_PATH: &str = "/style";
 
@@ -27,6 +27,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let app = Router::new()
         .route_service("/style", ServeFile::new("templates/output.css"))
         .route("/", get(hi))
+        .layer(CompressionLayer::new().br(true))
         .with_state(ClientBuilder::new().brotli(true).build()?);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
