@@ -25,7 +25,7 @@ struct App {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     let app = Router::new()
-        .route_service("/style", ServeFile::new("templates/output.css"))
+        .route_service("/style", ServeFile::new("style.css"))
         .route("/", get(hi))
         .layer(CompressionLayer::new().br(true))
         .with_state(ClientBuilder::new().brotli(true).build()?);
