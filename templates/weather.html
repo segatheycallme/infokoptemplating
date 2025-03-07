@@ -2,8 +2,12 @@
   <div class="grid grid-cols-2 grid-rows-3 p-3">
     <!-- visual, visual_img -->
     <div class="flex flex-col items-center justify-end">
-      <img src="{{ weather.visual_img }}" alt="sunny" class="size-26 mb-1" />
-      <span class="">{{ weather.visual }}</span>
+      <img
+        src="{{ weather.visual_img }}"
+        alt="sunny"
+        class="size-26 mb-1 grayscale brightness-50"
+      />
+      <span class="">{{ weather.visual|lower }}</span>
     </div>
     <!-- temp, temp pancic, temp feel -->
     <div class="flex flex-col items-center justify-end">
